@@ -1,0 +1,152 @@
+/* ===========================
+   Collections Page
+=========================== */
+
+.collections-page{
+
+    width:100%;
+    padding:50px 60px 100px;
+    background:#dedddd;
+}
+
+/* ===========================
+   Breadcrumb
+=========================== */
+
+.collections-top{
+
+    margin-bottom:30px;
+}
+
+.breadcrumb{
+
+    display:flex;
+    align-items:center;
+    gap:12px;
+
+    margin-bottom:10px;
+}
+
+.breadcrumb span{
+
+    font-size:10px;
+    letter-spacing:1px;
+    font-weight:500;
+    color:#777;
+}
+
+.breadcrumb .active{
+
+    color:#9A1F40;
+}
+
+.collections-title{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:32px;
+    font-weight:700;
+
+    color:#111;
+}
+
+/* ===========================
+   Toolbar
+=========================== */
+
+.collections-toolbar{
+
+    display:flex;
+    align-items:center;
+
+    gap:20px;
+
+    margin-bottom:48px;
+}
+
+.search-box{
+
+    width:280px;
+}
+
+.search-box input{
+
+    width:100%;
+    height:36px;
+
+    padding:0 18px;
+
+    border:1px solid #ddd;
+
+    outline:none;
+
+    font-size:12px;
+}
+
+.sort-box select{
+
+    width:200px;
+    height:36px;
+
+    padding:0 18px;
+
+    border:1px solid #ddd;
+
+    background:#fff;
+
+    font-size:12px;
+
+    cursor:pointer;
+}
+
+.product-count{
+
+    margin-left:auto;
+
+    font-size:14px;
+
+    color:#666;
+}
+
+/* ===========================
+   Content
+=========================== */
+
+.collections-content{
+    display:flex;
+    gap:45px;
+     align-items:flex-start;
+
+}
+
+.sidebar-column{
+    width:280px;
+    flex-shrink:0;
+}
+
+
+/* Temporary */
+
+.sidebar-placeholder{
+
+    height:700px;
+
+    border:1px dashed #ccc;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+}
+
+.products-placeholder{
+
+    height:700px;
+
+    border:1px dashed #ccc;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+}

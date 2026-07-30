@@ -1,0 +1,132 @@
+/* ==========================================
+   Service Features
+========================================== */
+
+.service-features{
+    width:100%;
+    padding:90px 80px;
+    background:#ffffff;
+}
+
+/* ==========================================
+   Grid
+========================================== */
+
+.service-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+}
+
+/* ==========================================
+   Card
+========================================== */
+
+.service-card{
+    padding:0 40px;
+    position:relative;
+}
+
+.service-card:not(:last-child){
+    border-right:1px solid #e4ddd4;
+}
+
+/* ==========================================
+   Icon
+========================================== */
+
+.service-icon{
+    font-size:24px;
+    color:#111;
+    margin-bottom:25px;
+}
+
+/* ==========================================
+   Small Accent Line
+========================================== */
+
+.service-line{
+    width:50px;
+    height:2px;
+    background:#9A1F40;
+    margin-bottom:30px;
+}
+
+/* ==========================================
+   Title
+========================================== */
+
+.service-title{
+    font-family:"Cormorant Garamond", serif;
+    font-size:16px;
+    font-weight:700;
+    color:#111;
+    margin-bottom:18px;
+}
+
+/* ==========================================
+   Description
+========================================== */
+
+.service-description{
+    font-size:12px;
+    line-height:1.8;
+    color:#5f5f5f;
+}
+
+/* ==========================================
+   Hover
+========================================== */
+
+.service-card{
+    transition:.35s;
+}
+
+.service-card:hover{
+    transform:translateY(-6px);
+}
+
+.service-card:hover .service-icon{
+    color:#9A1F40;
+}
+
+/* ==========================================
+   Responsive
+========================================== */
+
+@media(max-width:1200px){
+
+.service-grid{
+    grid-template-columns:repeat(2,1fr);
+    gap:60px;
+}
+
+.service-card{
+    border:none !important;
+}
+
+}
+
+@media(max-width:768px){
+
+.service-features{
+    padding:70px 25px;
+}
+
+.service-grid{
+    grid-template-columns:1fr;
+    gap:50px;
+}
+
+.service-card{
+    padding:0;
+}
+
+.service-title{
+    font-size:18px;
+}
+
+.service-description{
+    font-size:12px;
+}
+
+}

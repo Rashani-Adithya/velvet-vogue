@@ -1,0 +1,337 @@
+/* ==========================================
+   New Arrivals Section
+========================================== */
+
+.new-arrivals {
+    width: 100%;
+     padding: 40px 80px 80px;
+    background: #ffffff;
+}
+
+.shop-category {
+    padding-top: 80px;
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-bottom: 40px;
+}
+
+/* ==========================================
+   Section Header
+========================================== */
+
+.arrivals-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 50px;
+}
+
+.arrivals-subtitle {
+    display: block;
+    color: #9A1F40;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.arrivals-title {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: #111;
+    line-height: 1;
+}
+
+/* ==========================================
+   View All Button
+========================================== */
+
+.view-all-btn {
+
+    background: transparent;
+    border: none;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    color: #111;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.view-all-btn svg{
+    font-size:22px;
+}
+
+.view-all-btn:hover{
+    color:#9A1F40;
+}
+
+/* ==========================================
+   Products Grid
+========================================== */
+
+.products-grid{
+
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+
+    gap:22px;
+}
+
+/* ==========================================
+   Product Card
+========================================== */
+
+.product-card{
+
+    background:#fff;
+
+    transition:.35s;
+}
+
+.product-card:hover{
+
+    transform:translateY(-8px);
+    box-shadow:0 20px 40px rgba(0,0,0,.08);
+
+}
+
+/* ==========================================
+   Product Image
+========================================== */
+
+.product-image{
+
+    position:relative;
+
+    background:#f8f8f8;
+
+    border-radius:8px;
+
+    overflow:hidden;
+}
+
+.product-image img{
+
+    width:100%;
+    height:320px;
+
+    object-fit:cover;
+
+    display:block;
+
+    transition:.5s;
+}
+
+.product-card:hover img{
+
+    transform:scale(1.05);
+
+}
+
+/* ==========================================
+   New Badge
+========================================== */
+
+.new-badge{
+
+    position:absolute;
+
+    top:15px;
+    left:15px;
+
+    background:#9A1F40;
+    color:#fff;
+
+    padding:6px 12px;
+
+    font-size:11px;
+    font-weight:600;
+
+    letter-spacing:1px;
+
+    z-index:2;
+}
+
+/* ==========================================
+   Wishlist
+========================================== */
+
+.wishlist-btn{
+
+    position:absolute;
+
+    top:15px;
+    right:15px;
+
+    width:38px;
+    height:38px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    cursor:pointer;
+
+    z-index:2;
+
+    transition:.3s;
+}
+
+.wishlist-btn svg{
+
+    font-size:16px;
+}
+
+.wishlist-btn:hover{
+
+    background:#9A1F40;
+    color:#fff;
+
+    transform:scale(1.1);
+
+}
+
+/* ==========================================
+   Product Details
+========================================== */
+
+.arrival-details{
+    padding-top:20px;
+}
+
+.arrival-category{
+
+    color:#9A1F40;
+
+    font-size:10px;
+    font-weight:600;
+
+    letter-spacing:1px;
+}
+
+.arrival-name{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:16px;
+    font-weight:600;
+
+    color:#111;
+
+    margin:10px 0;
+}
+
+.arrival-rating{
+
+    color:#D4AF37;
+
+    font-size:14px;
+
+    margin-bottom:12px;
+}
+
+.arrival-price{
+
+    font-size:16px;
+    font-weight:700;
+
+    color:#111;
+}
+
+/* ==========================================
+   Responsive
+========================================== */
+
+@media(max-width:1200px){
+
+.products-grid{
+
+grid-template-columns:repeat(3,1fr);
+
+}
+
+}
+
+@media(max-width:768px){
+
+.new-arrivals{
+
+padding:70px 25px;
+
+}
+
+.arrivals-header{
+
+flex-direction:column;
+align-items:flex-start;
+
+gap:20px;
+
+}
+
+.arrivals-title{
+
+font-size:46px;
+
+}
+
+.products-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}
+
+/* Quick Add Button */
+
+.quick-add{
+
+    position:absolute;
+
+    left:50%;
+    bottom:-60px;
+
+    transform:translateX(-50%);
+
+    width:90%;
+
+    height:42px;
+
+    background:#111;
+    color:#fff;
+
+    border:none;
+
+    font-size:11px;
+    font-weight:600;
+
+    letter-spacing:1px;
+
+    cursor:pointer;
+
+    transition:.35s;
+}
+
+.product-card:hover .quick-add{
+
+    bottom:15px;
+
+}
+
+.quick-add:hover{
+
+    background:#9A1F40;
+
+}

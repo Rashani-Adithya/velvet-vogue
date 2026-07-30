@@ -1,0 +1,254 @@
+/* ==========================================
+   PRODUCT TABS
+========================================== */
+
+.product-tabs{
+    width:100%;
+    margin-top:80px;
+}
+
+/* ==========================================
+   TAB BUTTONS
+========================================== */
+
+.tab-buttons{
+    display:flex;
+    gap:10px;
+    border-bottom:1px solid #E8E8E8;
+    margin-bottom:35px;
+}
+
+.tab-buttons button{
+    padding:14px 30px;
+    background:none;
+    border:none;
+    border-bottom:3px solid transparent;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:600;
+    color:#666;
+    transition:.3s;
+}
+
+.tab-buttons button:hover{
+    color:#111;
+}
+
+.tab-buttons button.active{
+    color:#111;
+    border-bottom-color:#111;
+}
+
+/* ==========================================
+   TAB CONTENT
+========================================== */
+
+.tab-content{
+    background:#FFF;
+    border:1px solid #ECECEC;
+    border-radius:10px;
+    padding:40px;
+}
+
+.tab-content h3{
+    font-size:14px;
+    font-weight:700;
+    margin-bottom:10px;
+    color:#111;
+}
+
+.tab-content p{
+    color:#666;
+    line-height:1.9;
+    font-size:14px;
+}
+
+/* ==========================================
+   DETAILS TABLE
+========================================== */
+
+.details-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.details-table tr{
+    border-bottom:1px solid #F0F0F0;
+}
+
+.details-table td{
+    padding:18px 0;
+    font-size:14px;
+    vertical-align:top;
+}
+
+.details-table td:first-child{
+    width:220px;
+    font-weight:600;
+    color:#111;
+}
+
+.details-table td:last-child{
+    color:#666;
+}
+
+/* ==========================================
+   REVIEW SUMMARY
+========================================== */
+
+.review-summary{
+    text-align:center;
+    margin-bottom:40px;
+}
+
+.review-summary h2{
+    font-size:32px;
+    margin:15px 0 10px;
+    color:#111;
+}
+
+.review-summary p{
+    color:#777;
+}
+
+.review-stars{
+    display:flex;
+    justify-content:center;
+    gap:6px;
+    color:#F5B301;
+    font-size:16px;
+}
+
+/* ==========================================
+   REVIEW HEADER
+========================================== */
+
+.review-header{
+    display:flex;
+    justify-content:flex-end;
+    margin-bottom:20px;
+}
+
+.write-review-btn{
+    padding:14px 28px;
+    background:#111;
+    color:#FFF;
+    border:none;
+    border-radius:6px;
+    font-size:14px;
+    font-weight:500;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.write-review-btn:hover{
+    background:#333;
+}
+
+/* ==========================================
+   REVIEW CARD
+========================================== */
+
+.review-card{
+    border:1px solid #ECECEC;
+    border-radius:10px;
+    padding:25px;
+    margin-bottom:10px;
+}
+
+.review-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:10px;
+}
+
+.review-top h4{
+    margin-bottom:8px;
+    color:#111;
+}
+
+.review-top small{
+    color:#888;
+    font-size:12px;
+}
+
+.verified{
+    display:inline-block;
+    background:#EAF8EC;
+    color:#2E7D32;
+    padding:5px 12px;
+    border-radius:30px;
+    font-size:10px;
+    font-weight:500;
+}
+
+.review-card .review-stars{
+    justify-content:flex-start;
+    margin-bottom:15px;
+    font-size:16px;
+}
+
+.review-card p{
+    color:#666;
+    line-height:1.8;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width:992px){
+
+    .tab-content{
+        padding:30px;
+    }
+
+    .details-table td:first-child{
+        width:180px;
+    }
+
+}
+
+@media (max-width:768px){
+
+    .tab-buttons{
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+
+    .tab-buttons button{
+        flex:1;
+        min-width:120px;
+    }
+
+    .tab-content{
+        padding:25px;
+    }
+
+    .details-table{
+        display:block;
+        overflow-x:auto;
+    }
+
+    .review-summary h2{
+        font-size:34px;
+    }
+
+}
+
+@media (max-width:480px){
+
+    .product-tabs{
+        margin-top:60px;
+    }
+
+    .tab-content{
+        padding:20px;
+    }
+
+    .tab-content h3{
+        font-size:24px;
+    }
+
+}

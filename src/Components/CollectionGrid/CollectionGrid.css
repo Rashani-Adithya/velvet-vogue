@@ -1,0 +1,43 @@
+/* ===============================
+   Collection Grid
+================================= */
+
+.collection-grid{
+     flex:1;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:35px;
+    align-items:start;
+}
+
+.collection-grid::-webkit-scrollbar{
+    width:8px;
+}
+
+.collection-grid::-webkit-scrollbar-thumb{
+    background:#c8c8c8;
+    border-radius:20px;
+}
+
+
+/* Large Desktop */
+@media (max-width: 1400px){
+    .collection-grid{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Laptop */
+@media (max-width: 1200px){
+    .collection-grid{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Tablet */
+@media (max-width: 768px){
+    .collection-grid{
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+}

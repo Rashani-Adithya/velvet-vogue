@@ -1,0 +1,149 @@
+/* ====================================
+   Order Success Page
+==================================== */
+
+.success-page{
+    min-height:100vh;
+    background:#FAF8F6;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:90px 20px 80px;
+}
+
+.success-container{
+    max-width:500px;
+    height: 450px;
+    width:100%;
+    background:#fff;
+    padding:70px 50px;
+    text-align:center;
+    border:1px solid #ececec;
+}
+
+/* ====================================
+   Success Icon
+==================================== */
+
+.success-icon{
+    width:90px;
+    height:90px;
+    margin:0 auto 15px;
+    border:3px solid #8B1E3F;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#8B1E3F;
+    font-size:36px;
+}
+
+/* ====================================
+   Heading
+==================================== */
+
+.success-container h1{
+    font-family:"Times New Roman", serif;
+    font-size:36px;
+    font-weight:600;
+    color:#111;
+    margin-bottom:18px;
+}
+
+/* ====================================
+   Order Number
+==================================== */
+
+.order-number{
+    font-size:16px;
+    color:#8B1E3F;
+    font-weight:600;
+    margin-bottom:18px;
+}
+
+/* ====================================
+   Message
+==================================== */
+
+.success-message{
+    max-width:400px;
+    margin:0 auto 45px;
+    color:#666;
+    line-height:1.8;
+    font-size:14px;
+     margin-bottom:25px;
+}
+
+/* ====================================
+   Button
+==================================== */
+
+.continue-btn{
+    display:inline-flex;
+    justify-content:center;
+    align-items:center;
+    width:200px;
+    height:48px;
+    background:#8B1E3F;
+    color:#fff;
+    text-decoration:none;
+    letter-spacing:1px;
+    font-size:12px;
+    font-weight:600;
+    transition:.3s;
+    
+}
+
+.continue-btn:hover{
+    background:#731732;
+}
+
+/* ====================================
+   Responsive
+==================================== */
+
+@media (max-width:768px){
+
+    .success-page{
+        padding:120px 20px 60px;
+    }
+
+    .success-container{
+        padding:50px 30px;
+    }
+
+    .success-container h1{
+        font-size:36px;
+    }
+
+    .success-icon{
+        width:80px;
+        height:80px;
+        font-size:36px;
+    }
+
+    .success-message{
+        font-size:14px;
+    }
+
+    .continue-btn{
+        width:100%;
+    }
+
+}
+
+@media (max-width:480px){
+
+    .success-container{
+        padding:40px 20px;
+    }
+
+    .success-container h1{
+        font-size:16px;
+    }
+
+    .order-number{
+        font-size:14px;
+    }
+
+}

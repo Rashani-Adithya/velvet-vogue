@@ -1,0 +1,53 @@
+/* ===== Main Website Layout ===== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: #ffffff;
+  color: #111111;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
+main {
+  width: 100%;
+}
+
+/* Standard content sections */
+.section-container {
+  width: 90%;
+  max-width: 1500px;
+  margin: 0 auto;
+}
+
+/* Full-width sections (Hero, Promotional Banner, etc.) */
+.full-width-section {
+  width: 100%;
+}
+
+html,
+body,
+#root{
+    margin:0;
+    padding:0;
+    width:100%;
+    overflow-x:hidden;
+}

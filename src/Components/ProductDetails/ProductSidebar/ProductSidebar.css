@@ -1,0 +1,62 @@
+.product-sidebar{
+
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+
+}
+
+.sidebar-card{
+
+    display:flex;
+    align-items:flex-start;
+    gap:18px;
+
+    padding:22px;
+
+    border:1px solid #ececec;
+    border-radius:10px;
+
+    background:#fff;
+
+    transition:.3s;
+    margin-bottom: -10px;
+
+}
+
+.sidebar-card:hover{
+
+    box-shadow:0 8px 22px rgba(0,0,0,.08);
+
+}
+
+.sidebar-icon{
+
+    font-size:18px;
+    color:#111;
+    margin-top:4px;
+    
+
+}
+
+.sidebar-card h4{
+
+    margin-bottom:6px;
+
+    font-size:14px;
+
+    color:#111;
+    
+
+}
+
+.sidebar-card p{
+
+    color:#666;
+
+    line-height:1.6;
+
+    font-size:12px;
+     margin-bottom: -10px;
+
+}
