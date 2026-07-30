@@ -1,12 +1,22 @@
-import { useState } from "react";
 import "./CollectionSidebar.css";
 
-function CollectionSidebar() {
 
-  // Selected Filters
-  const [category, setCategory] = useState("All");
-  const [gender, setGender] = useState("All");
-  const [size, setSize] = useState("All");
+function CollectionSidebar({
+ // Selected Filters
+  category,
+  setCategory,
+
+  gender,
+  setGender,
+
+  size,
+  setSize,
+
+  maxPrice,
+  setMaxPrice
+
+}) {
+ 
 
   return (
     <aside className="collection-sidebar">
@@ -93,13 +103,14 @@ function CollectionSidebar() {
           type="range"
           min="1000"
           max="50000"
-          defaultValue="50000"
-          className="price-slider"
-        />
+           value={maxPrice}
+          onChange={(e) => setMaxPrice(Number(e.target.value))}
+            className="price-slider"
+          />
 
         <div className="price-values">
           <span>Rs. 1,000</span>
-          <span>Rs. 50,000</span>
+          <span>Rs. {maxPrice.toLocaleString()}</span>
         </div>
 
       </div>
@@ -171,6 +182,7 @@ function CollectionSidebar() {
           setCategory("All");
           setGender("All");
           setSize("All");
+          setMaxPrice(50000);
         }}
       >
         CLEAR FILTERS

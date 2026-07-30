@@ -1,0 +1,114 @@
+.login-page{
+    min-height:100vh;
+    background:#f8f6f2;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:80px 20px;
+}
+
+.login-container{
+    width:100%;
+    max-width:700px;
+
+    background:#fff;
+    border:1px solid #e5e5e5;
+}
+
+.login-tabs{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+}
+
+.tab-btn{
+    height:72px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    text-decoration:none;
+
+    color:#111;
+
+    font-size:18px;
+    letter-spacing:2px;
+
+    border-bottom:1px solid #ddd;
+}
+
+.tab-btn.active{
+    background:#111;
+    color:#fff;
+}
+
+.login-form{
+    padding:40px;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:18px;
+}
+
+.login-form label{
+    font-size:13px;
+    letter-spacing:2px;
+}
+
+.login-form input{
+    height:56px;
+
+    padding:0 18px;
+
+    border:1px solid #ddd;
+
+    font-size:16px;
+}
+
+.login-options{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-top:8px;
+}
+
+.remember{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    font-size:14px;
+}
+
+.forgot-link{
+    text-decoration:none;
+    color:#111;
+    font-size:14px;
+}
+
+.login-btn{
+    margin-top:20px;
+
+    height:58px;
+
+    border:none;
+
+    background:#c8bfb1;
+
+    color:#fff;
+
+    font-size:16px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.login-btn:hover{
+    background:#111;
+}

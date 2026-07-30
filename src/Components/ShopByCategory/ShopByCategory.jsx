@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 // Import CSS
 import "./ShopByCategory.css";
 
@@ -33,13 +34,13 @@ function ShopByCategory() {
         </div>
 
         {/* View All */}
-        <button className="view-all">
+        <Link to="/collections" className="view-all">
 
           VIEW ALL
 
           <HiArrowLongRight />
 
-        </button>
+        </Link>
 
       </div>
 
@@ -62,13 +63,16 @@ function ShopByCategory() {
               Trendy looks for everyday comfort.
             </p>
 
-            <button className="shop-button">
+            <Link
+                to="/collections?category=Casualwear"
+                className="shop-button"
+             >  
 
               SHOP NOW
 
               <HiArrowLongRight />
 
-            </button>
+            </Link>
 
           </div>
 
@@ -90,13 +94,16 @@ function ShopByCategory() {
               Elegant styles for every occasion.
             </p>
 
-            <button className="shop-button">
+             <Link
+                  to="/collections?category=Formalwear"
+                  className="shop-button"
+            >
 
               SHOP NOW
 
               <HiArrowLongRight />
 
-            </button>
+           </Link>
 
           </div>
 
@@ -118,13 +125,17 @@ function ShopByCategory() {
               Finishing touches to elevate your style.
             </p>
 
-            <button className="shop-button">
+            
+            <Link
+                 to="/collections?category=Accessories"
+                 className="shop-button"
+            >
 
               SHOP NOW
 
               <HiArrowLongRight />
 
-            </button>
+            </Link>
 
           </div>
 

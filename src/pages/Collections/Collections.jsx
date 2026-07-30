@@ -1,3 +1,8 @@
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+
+import products from "../../data/products";
+
 // Sidebar Component
 import CollectionSidebar from "../../Components/CollectionSidebar/CollectionSidebar";
 
@@ -11,6 +16,101 @@ import Footer from "../../Components/Footer/Footer";
 import "./Collections.css";
 
 function Collections() {
+
+  const [searchParams] = useSearchParams();
+
+  const [category, setCategory] = useState(
+  searchParams.get("category") || "All"
+);
+  const [gender, setGender] = useState("All");
+  const [size, setSize] = useState("All");
+  const [maxPrice, setMaxPrice] = useState(50000);
+
+  const [search, setSearch] = useState("");
+  const [sort, setSort] = useState("Featured");
+
+  useEffect(() => {
+  const selectedCategory = searchParams.get("category") || "All";
+  setCategory(selectedCategory);
+}, [searchParams]);
+
+
+let filteredProducts = [...products];
+
+if (category === "Casualwear") {
+
+  filteredProducts = filteredProducts.filter(
+    (product) => product.category.includes("Casual")
+  );
+
+} else if (category === "Formalwear") {
+
+  filteredProducts = filteredProducts.filter(
+    (product) => product.category.includes("Formal")
+  );
+
+} else if (category === "Accessories") {
+
+  filteredProducts = filteredProducts.filter(
+    (product) => product.category === "Accessories"
+  );
+
+}
+
+// Gender filter
+if (gender !== "All") {
+  filteredProducts = filteredProducts.filter(
+    (product) => product.gender === gender
+  );
+}
+
+// Price filter
+if (maxPrice < 50000) {
+  filteredProducts = filteredProducts.filter(
+    (product) => product.price <= maxPrice
+  );
+}
+
+// Size filter
+if (size !== "All") {
+  filteredProducts = filteredProducts.filter(
+    (product) => product.sizes.includes(size)
+  );
+}
+
+// Search filter
+if (search.trim() !== "") {
+  filteredProducts = filteredProducts.filter((product) =>
+    product.name.toLowerCase().includes(search.toLowerCase())
+  );
+}
+
+if (sort === "LowToHigh") {
+
+  filteredProducts.sort((a, b) => a.price - b.price);
+
+}
+
+else if (sort === "HighToLow") {
+
+  filteredProducts.sort((a, b) => b.price - a.price);
+
+}
+
+else if (sort === "Newest") {
+
+  filteredProducts.sort((a, b) => {
+
+    if (a.status === "New" && b.status !== "New") return -1;
+    if (a.status !== "New" && b.status === "New") return 1;
+
+    return 0;
+
+  });
+
+}
+
+
   return (
     <>
       {/* Collections Page */}
@@ -45,22 +145,27 @@ function Collections() {
             <input
               type="text"
               placeholder="Search by name..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
 
           {/* Sort */}
           <div className="sort-box">
-            <select>
-              <option>Sort: Featured</option>
-              <option>Price: Low to High</option>
-              <option>Price: High to Low</option>
-              <option>Newest</option>
+            <select
+             value={sort}
+             onChange={(e) => setSort(e.target.value)}
+             >
+              <option value="Featured">Sort: Featured</option>
+              <option value="LowToHigh">Price: Low to High</option>
+              <option value="HighToLow">Price: High to Low</option>
+              <option value="Newest">Newest</option>
             </select>
           </div>
 
           {/* Product Count */}
           <div className="product-count">
-            12 Products
+            {filteredProducts.length} Products
           </div>
 
         </div>
@@ -70,13 +175,27 @@ function Collections() {
 
           {/* Left Sidebar */}
           <div className="sidebar-column">
-            <CollectionSidebar />
+            <CollectionSidebar 
+              category={category}
+              setCategory={setCategory}
+
+              gender={gender}
+              setGender={setGender}
+
+              size={size}
+              setSize={setSize}
+
+              maxPrice={maxPrice}
+              setMaxPrice={setMaxPrice}
+            />
           </div>
           
 
           {/* Right Products */}
           
-              <CollectionGrid />
+              <CollectionGrid 
+                   products={filteredProducts}
+              />
         
           
 

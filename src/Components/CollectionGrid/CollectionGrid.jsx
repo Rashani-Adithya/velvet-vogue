@@ -1,9 +1,8 @@
 import "./CollectionGrid.css";
 import CollectionCard from "../CollectionCard/CollectionCard";
-import products from "../../data/products";
 
-function CollectionGrid() {
-  return (
+function CollectionGrid({ products }) {
+    return (
     <section className="collection-grid">
 
       {products.map((product) => (
