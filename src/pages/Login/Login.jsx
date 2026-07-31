@@ -1,80 +1,197 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+
+import { auth, db } from "../../firebase/firebase";
+
 import "./Login.css";
 
 function Login() {
-  return (
-    <main className="login-page">
 
-      <div className="login-container">
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [errors, setErrors] = useState({});
 
-        {/* Tabs */}
-        <div className="login-tabs">
+    const navigate = useNavigate();
 
-          <Link
-            to="/login"
-            className="tab-btn active"
-          >
-            SIGN IN
-          </Link>
+    const handleLogin = async (e) => {
 
-          <Link
-            to="/register"
-            className="tab-btn"
-          >
-            CREATE ACCOUNT
-          </Link>
+        e.preventDefault();
 
-        </div>
+        const newErrors = {};
 
-        {/* Form */}
-        <form className="login-form">
+        if (!email.trim()) {
+            newErrors.email = "Email is required.";
+        }
 
-          <label>EMAIL ADDRESS</label>
+        if (!password.trim()) {
+            newErrors.password = "Password is required.";
+        }
 
-          <input
-            type="email"
-            placeholder="Enter your email"
-          />
+        setErrors(newErrors);
 
-          <label>PASSWORD</label>
+        if (Object.keys(newErrors).length > 0) {
+            return;
+        }
 
-          <input
-            type="password"
-            placeholder="Enter your password"
-          />
+        try {
 
-          <div className="login-options">
+            const userCredential = await signInWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
 
-            <label className="remember">
+            const userRef = doc(
+                db,
+                "users",
+                userCredential.user.uid
+            );
 
-              <input type="checkbox" />
+            const userSnap = await getDoc(userRef);
 
-              Remember Me
+            if (!userSnap.exists()) {
+                alert("User profile not found.");
+                return;
+            }
 
-            </label>
+            const userData = userSnap.data();
 
-            <Link
-              to="/forgot-password"
-              className="forgot-link"
-            >
-              Forgot Password?
-            </Link>
+            if (userData.role === "admin") {
+                navigate("/admin");
+            } else {
+                navigate("/account");
+            }
 
-          </div>
+        } catch (error) {
 
-          <button
-            type="submit"
-            className="login-btn"
-          >
-            SIGN IN
-          </button>
+            alert(error.message);
 
-        </form>
+        }
 
-      </div>
+    };
 
-    </main>
-  );
+    return (
+
+        <section className="login-page">
+
+            <div className="login-card">
+
+                {/* Tabs */}
+                <div className="login-tabs">
+
+                    <Link
+                        to="/login"
+                        className="login-tab active"
+                    >
+                        SIGN IN
+                    </Link>
+
+                    <Link
+                        to="/register"
+                        className="login-tab"
+                    >
+                        CREATE ACCOUNT
+                    </Link>
+
+                </div>
+
+                {/* Form */}
+                <div className="login-body">
+
+                    <form
+                        className="login-form"
+                        onSubmit={handleLogin}
+                    >
+
+                        {/* Email */}
+                        <div className="form-group">
+
+                            <label>Email Address</label>
+
+                            <input
+                                type="email"
+                                placeholder="Enter your email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+
+                            {errors.email && (
+                                <p className="error-text">
+                                    {errors.email}
+                                </p>
+                            )}
+
+                        </div>
+
+                        {/* Password */}
+                        <div className="form-group">
+
+                            <label>Password</label>
+
+                            <div className="password-input">
+
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    placeholder="Enter your password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+
+                                <button
+                                    type="button"
+                                    className="toggle-password"
+                                    onClick={() =>
+                                        setShowPassword(!showPassword)
+                                    }
+                                >
+                                    {showPassword ? (
+                                        <FaEyeSlash />
+                                    ) : (
+                                        <FaEye />
+                                    )}
+                                </button>
+
+                            </div>
+
+                            {errors.password && (
+                                <p className="error-text">
+                                    {errors.password}
+                                </p>
+                            )}
+
+                        </div>
+
+                        {/* Forgot Password */}
+                        <div className="login-links">
+
+                            <Link to="/forgot-password">
+                                Forgot your password?
+                            </Link>
+
+                        </div>
+
+                        {/* Button */}
+                        <button
+                            type="submit"
+                            className="login-btn"
+                        >
+                            SIGN IN
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    );
 }
 
 export default Login;

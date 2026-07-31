@@ -1,0 +1,193 @@
+.account-top{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:35px;
+
+}
+
+.account-top h1{
+
+    font-size:24px;
+    font-family:Georgia, serif;
+    color:#1d1d1d;
+
+}
+
+.logout-btn{
+
+    border:none;
+    background:none;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    cursor:pointer;
+    font-size:14px;
+    color:#7b4a6a;
+
+}
+
+.profile-card{
+
+    background:linear-gradient(135deg,#f1268e,#c00067);
+
+    border-radius:22px;
+
+    padding:32px 40px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:30px;
+
+    color:white;
+
+    margin-bottom:35px;
+
+}
+
+.avatar{
+
+    width:48px;
+
+    height:48px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.18);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:16px;
+
+    font-weight:600;
+
+}
+
+.profile-info{
+
+    flex:1;
+
+}
+
+.profile-name{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-bottom:8px;
+
+}
+
+.profile-name h2{
+
+    font-size:24px;
+
+}
+
+.admin-tag{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    padding:6px 14px;
+
+    background:rgba(255,255,255,.18);
+
+    border-radius:30px;
+
+    font-size:12px;
+
+    font-weight:500;
+
+}
+
+.profile-info p{
+
+    font-size:12px;
+
+    opacity:.95;
+
+}
+
+.account-tabs{
+
+    display:flex;
+
+    gap:30px;
+
+    border-bottom:1px solid #ececec;
+
+    margin-bottom:35px;
+
+}
+
+.account-tabs button{
+
+    background:none;
+
+    border:none;
+
+    cursor:pointer;
+
+    padding:18px 0;
+
+    font-size:18px;
+
+    font-weight:600;
+
+    color:#555;
+
+}
+
+.active-tab{
+
+    color:#8B1E3F !important;
+
+    border-bottom:3px solid #8B1E3F;
+
+}
+
+@media(max-width:768px){
+
+.account-top{
+
+flex-direction:column;
+align-items:flex-start;
+gap:20px;
+
+}
+
+.profile-card{
+
+flex-direction:column;
+text-align:center;
+
+}
+
+.profile-name{
+
+justify-content:center;
+flex-wrap:wrap;
+
+}
+
+.account-tabs{
+
+overflow-x:auto;
+
+}
+
+}

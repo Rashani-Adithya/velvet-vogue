@@ -1,10 +1,15 @@
 // Import CSS
 import "./Hero.css";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // Import Hero Image
 import heroImage from "../../assets/hero.png";
 
 function Hero() {
+
+  const navigate = useNavigate();
+
   return (
     <section className="hero">
 
@@ -31,10 +36,15 @@ function Hero() {
 
         {/* Action Buttons */}
         <div className="hero-buttons">
-
-          <button className="btn-primary">
+          
+          <Link to="/collections">
+          <button 
+                className="btn-primary"
+                  onClick={() => navigate("/collections")}
+          >
             SHOP NOW
           </button>
+        </Link>
 
           <button className="btn-secondary">
             VIEW LOOKBOOK

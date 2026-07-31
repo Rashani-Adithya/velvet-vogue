@@ -4,6 +4,9 @@ import { Routes, Route } from "react-router-dom";
 // Layout
 import Layout from "./Components/Layout/Layout";
 
+// Components
+import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
+
 // Pages
 import Home from "./pages/Home/Home";
 import Collections from "./pages/Collections/Collections";
@@ -12,7 +15,10 @@ import Cart from "./pages/Cart/Cart";
 import Checkout from "./pages/Checkout/Checkout";
 import Account from "./pages/Account/Account";
 import OrderSuccess from "./pages/OrderSuccess/OrderSuccess";
-
+import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
+import AdminRoute from "./Components/AdminRoute/AdminRoute";
+import AdminPanel from "./pages/Admin/AdminPanel/AdminPanel";
 
 // Styles
 import "./App.css";
@@ -57,7 +63,11 @@ function App() {
                  {/*Account*/}
                 <Route
                      path="account"
-                     element={<Account />}
+                     element={
+                           <ProtectedRoute>
+                                   <Account />
+                            </ProtectedRoute> 
+                            }
                 />
 
                 {/*OrderSuccess*/}
@@ -66,13 +76,28 @@ function App() {
                      element={<OrderSuccess />}
                  />
 
-                {/* Future Pages */}
+                {/* Login*/}
+                <Route 
+                    path="/login" 
+                    element={<Login />} />
 
-                {/*
-                <Route path="account" element={<Account />} />
-                <Route path="wishlist" element={<Wishlist />} />
-                <Route path="order-success" element={<OrderSuccess />} />
-                */}
+                {/*Register*/}
+                <Route
+                    path="register"
+                     element={<Register />}
+
+                />
+
+                {/* Admin Dashboard */}
+<Route
+    path="admin"
+    element={
+        <AdminRoute>
+            <AdminPanel />
+        </AdminRoute>
+    }
+/>
+
 
             </Route>
 

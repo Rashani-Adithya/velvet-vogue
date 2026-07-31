@@ -5,14 +5,17 @@ import { Link, NavLink } from "react-router-dom";
 import { HiOutlineUser } from "react-icons/hi2";
 import { FiShoppingBag } from "react-icons/fi";
 
+import { useAuth } from "../../context/AuthContext";
 import { useCart } from "../../context/CartContext";
 
 function Header() {
 
+    const { user } = useAuth();
     const { totalItems } = useCart();
 
     return (
         <>
+
             {/* Top Bar */}
             <div className="top-bar">
                 <p>
@@ -59,11 +62,17 @@ function Header() {
                 <div className="header-right">
 
                     <Link
-                        to="/account"
+                        to={user ? "/account" : "/login"}
                         className="account"
                     >
                         <HiOutlineUser />
-                        <span>ACCOUNT</span>
+
+                        <span>
+                            {user
+                                ? user.fullName.split(" ")[0].toUpperCase()
+                                : "ACCOUNT"}
+                        </span>
+
                     </Link>
 
                     <Link
@@ -82,6 +91,7 @@ function Header() {
                 </div>
 
             </header>
+
         </>
     );
 }

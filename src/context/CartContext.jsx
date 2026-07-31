@@ -83,6 +83,13 @@ export function CartProvider({ children }) {
 
     };
 
+    // Clear Cart
+    const clearCart = () => {
+
+        setCartItems([]);
+
+    };
+
     // Total Price
     const totalPrice = cartItems.reduce(
         (total, item) => total + item.price * item.quantity,
@@ -96,18 +103,23 @@ export function CartProvider({ children }) {
     );
 
     return (
+
         <CartContext.Provider
             value={{
                 cartItems,
                 addToCart,
                 removeFromCart,
                 updateQuantity,
+                clearCart,
                 totalPrice,
                 totalItems,
             }}
         >
+
             {children}
+
         </CartContext.Provider>
+
     );
 
 }

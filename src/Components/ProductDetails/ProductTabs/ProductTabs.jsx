@@ -1,43 +1,80 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 import "./ProductTabs.css";
 import { FaStar } from "react-icons/fa";
 import ReviewForm from "../ReviewForm/ReviewForm";
+import { useAuth } from "../../../context/AuthContext";
+
+import {
+    addReview as saveReview,
+    getReviews
+} from "../../../services/reviewService";
+
 
 function ProductTabs({ product }) {
+    
+     const { user } = useAuth();
 
     const [activeTab, setActiveTab] = useState("description");
 
     const [showReviewForm, setShowReviewForm] = useState(false);
 
-    const [reviews, setReviews] = useState([
-        {
-            name: "Nimal Perera",
-            rating: 5,
-            comment:
-                "Excellent quality and very comfortable. The stitching and material exceeded my expectations.",
-            date: "18 Jul 2026"
-        },
-        {
-            name: "Sarah Fernando",
-            rating: 5,
-            comment:
-                "Beautiful design and premium fabric. I will definitely purchase another colour.",
-            date: "14 Jul 2026"
-        },
-        {
-            name: "Ayesha Silva",
-            rating: 5,
-            comment:
-                "Fast delivery, excellent packaging and the product looks exactly like the photos.",
-            date: "08 Jul 2026"
+       const [reviews, setReviews] = useState([]);
+
+       useEffect(() => {
+
+    async function loadReviews() {
+
+        try {
+
+            const data = await getReviews(product.docId);
+
+            setReviews(data);
+
+        } catch (error) {
+
+            console.error(error);
+
         }
-    ]);
 
-    const addReview = (review) => {
+    }
 
-        setReviews((prevReviews) => [review, ...prevReviews]);
+    loadReviews();
 
-    };
+}, [product.docId]);
+
+
+const addReview = async (review) => {
+
+    try {
+
+        await saveReview({
+
+            productId: product.docId,
+
+            uid: user.uid,
+
+            userName: user.displayName || user.email,
+
+            rating: review.rating,
+
+            comment: review.comment
+
+        });
+
+        const updatedReviews = await getReviews(product.docId);
+
+        setReviews(updatedReviews);
+
+    } catch (error) {
+
+        console.error(error);
+
+    }
+
+};
+
+    
     
     return (
 
@@ -63,7 +100,7 @@ function ProductTabs({ product }) {
                     className={activeTab === "reviews" ? "active" : ""}
                     onClick={() => setActiveTab("reviews")}
                 >
-                    Reviews ({product.reviews})
+                    Reviews ({reviews.length})
                 </button>
 
             </div>
@@ -200,29 +237,44 @@ function ProductTabs({ product }) {
 
             </div>
 
-            <h2>{product.rating} / 5</h2>
+            <h2>
+    {reviews.length > 0
+        ? (
+            reviews.reduce(
+                (total, review) => total + review.rating,
+                0
+            ) / reviews.length
+        ).toFixed(1)
+        : "0.0"} / 5
+</h2>
 
-            <p>
-
-                Based on {product.reviews} verified customer reviews
-
-            </p>
+<p>
+    Based on {reviews.length} verified customer reviews
+</p>
 
         </div>
 
         <div className="review-header">
 
             <button
+    className="write-review-btn"
+    onClick={() => {
 
-                className="write-review-btn"
+        if (!user) {
 
-                onClick={() => setShowReviewForm(true)}
+            alert("Please login to write a review.");
 
-            >
+            return;
 
-                Write a Review
+        }
 
-            </button>
+        setShowReviewForm(true);
+
+    }}
+>
+    Write a Review
+</button>
+
 
         </div>
 
@@ -237,7 +289,7 @@ function ProductTabs({ product }) {
 
                     <div>
 
-                        <h4>{review.name}</h4>
+                        <h4>{review.userName}</h4>
 
                         <span className="verified">
 
@@ -247,23 +299,37 @@ function ProductTabs({ product }) {
 
                     </div>
 
-                    <small>{review.date}</small>
+                    <small>
+                         {review.createdAt
+                         ? review.createdAt.toDate().toLocaleDateString()
+                         : ""}
+                        </small>
 
                 </div>
 
                 <div className="review-stars">
 
-                    {[1,2,3,4,5].map((star)=>(
+                  {[1,2,3,4,5].map((star) => {
 
-                        <FaStar
+    const average =
+        reviews.length > 0
+            ? reviews.reduce(
+                  (total, review) => total + review.rating,
+                  0
+              ) / reviews.length
+            : 0;
 
-                            key={star}
+    return (
 
-                            color={star<=review.rating ? "#F5B301" : "#ddd"}
+        <FaStar
+            key={star}
+            color={star <= average ? "#F5B301" : "#ddd"}
+        />
 
-                        />
+    );
 
-                    ))}
+})}
+
 
                 </div>
 

@@ -1,5 +1,6 @@
 import "./ProductImage.css";
 import { FaHeart } from "react-icons/fa";
+import productImages from "../../../assets/productImages";
 
 function ProductImage({ product }) {
 
@@ -10,10 +11,14 @@ function ProductImage({ product }) {
             <div className="product-image-container">
 
                 <img
-                    src={product.image}
-                    alt={product.name}
-                    className="product-image"
-                />
+    src={
+        productImages[
+            product.image.replace("/src/assets/", "")
+        ]
+    }
+    alt={product.name}
+    className="product-image"
+/>
 
                 {/* Status Badge */}
 

@@ -3,9 +3,27 @@ import { Link } from "react-router-dom";
 import { FiHeart } from "react-icons/fi";
 import { FaStar } from "react-icons/fa";
 import { useCart } from "../../context/CartContext";
+import productImages from "../../assets/productImages";
+
+import { useEffect, useState } from "react";
+import { FaHeart } from "react-icons/fa";
+
+import { useAuth } from "../../context/AuthContext";
+
+import {
+    addToWishlist,
+    removeFromWishlist,
+    getWishlist
+} from "../../services/wishlistService";
+
 
 function CollectionCard({ product }) {
     const { addToCart } = useCart();
+
+    const { user } = useAuth();
+
+const [saved, setSaved] = useState(false);
+const [wishlistDocId, setWishlistDocId] = useState(null);
 
     const handleAddToCart = (e) => {
         e.preventDefault();
@@ -18,6 +36,76 @@ function CollectionCard({ product }) {
             product.colours[0] // Default Colour
         );
     };
+
+    useEffect(() => {
+
+    async function loadWishlist() {
+
+        if (!user) return;
+
+        const wishlist = await getWishlist(user.uid);
+
+        const item = wishlist.find(
+            (w) => w.productId === product.docId
+        );
+
+        if (item) {
+
+            setSaved(true);
+            setWishlistDocId(item.docId);
+
+        }
+
+    }
+
+    loadWishlist();
+
+}, [user, product.docId]);
+
+
+const handleWishlist = async (e) => {
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!user) {
+
+        alert("Please login first.");
+
+        return;
+
+    }
+
+    if (saved) {
+
+        await removeFromWishlist(wishlistDocId);
+
+        setSaved(false);
+        setWishlistDocId(null);
+
+    } else {
+
+        await addToWishlist(user.uid, product.docId);
+
+        const wishlist = await getWishlist(user.uid);
+
+        const item = wishlist.find(
+            (w) => w.productId === product.docId
+        );
+
+        if (item) {
+
+            setWishlistDocId(item.docId);
+
+        }
+
+        setSaved(true);
+
+    }
+
+};
+
+
 
     return (
         <div className="collection-card">
@@ -37,16 +125,22 @@ function CollectionCard({ product }) {
                 )}
 
                 {/* Wishlist */}
-                <button className="wishlist-btn">
-                    <FiHeart />
+                <button className="wishlist-btn"
+                         onClick={handleWishlist}
+                >
+                     {saved ? <FaHeart /> : <FiHeart />}
                 </button>
 
                 {/* Image */}
                 <Link to={`/collections/${product.id}`}>
                     <img
-                        src={product.image}
-                        alt={product.name}
-                        className="collection-image"
+                       src={
+                             productImages[
+                                      product.image.replace("/src/assets/", "")
+                             ]
+                        }
+                             alt={product.name}
+                             className="collection-image"
                     />
                 </Link>
 
@@ -90,9 +184,9 @@ function CollectionCard({ product }) {
 
                     {/* Price */}
                     <div className="collection-price">
-
+                        
                         <span className="current-price">
-                            Rs. {product.price.toLocaleString()}
+                             Rs. {product.price.toLocaleString()}
                         </span>
 
                         {product.oldPrice && (

@@ -1,0 +1,38 @@
+.admin-banner {
+    width: 100%;
+    background: #f8f4ef;
+    border-top: 1px solid #e6ddd4;
+    border-bottom: 1px solid #e6ddd4;
+
+    padding: 16px 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    font-size: 16px;
+}
+
+.admin-banner span {
+    color: #555;
+    font-weight: 500;
+}
+
+.admin-banner a {
+    color: #8B1E3F;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+.admin-banner a:hover {
+    color: #8B1E3F;
+}
+
+@media (max-width: 768px) {
+    .admin-banner {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+}

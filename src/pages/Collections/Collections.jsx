@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import products from "../../data/products";
+import { getProducts } from "../../services/productService";
 
 // Sidebar Component
 import CollectionSidebar from "../../Components/CollectionSidebar/CollectionSidebar";
@@ -20,8 +20,8 @@ function Collections() {
   const [searchParams] = useSearchParams();
 
   const [category, setCategory] = useState(
-  searchParams.get("category") || "All"
-);
+    searchParams.get("category") || "All"
+  );
   const [gender, setGender] = useState("All");
   const [size, setSize] = useState("All");
   const [maxPrice, setMaxPrice] = useState(50000);
@@ -29,87 +29,114 @@ function Collections() {
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("Featured");
 
+  // Products from Firestore
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Update category from URL
   useEffect(() => {
-  const selectedCategory = searchParams.get("category") || "All";
-  setCategory(selectedCategory);
-}, [searchParams]);
+    const selectedCategory = searchParams.get("category") || "All";
+    setCategory(selectedCategory);
+  }, [searchParams]);
 
+  // Load products from Firestore
+  useEffect(() => {
+    async function loadProducts() {
+      try {
+        const data = await getProducts();
+        setProducts(data);
+      } catch (error) {
+        console.error("Failed to load products:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
 
-let filteredProducts = [...products];
+    loadProducts();
+  }, []);
 
-if (category === "Casualwear") {
+  let filteredProducts = [...products];
 
-  filteredProducts = filteredProducts.filter(
-    (product) => product.category.includes("Casual")
-  );
+  // Category filter
+  if (category === "Casualwear") {
 
-} else if (category === "Formalwear") {
+    filteredProducts = filteredProducts.filter(
+      (product) => product.category.includes("Casual")
+    );
 
-  filteredProducts = filteredProducts.filter(
-    (product) => product.category.includes("Formal")
-  );
+  } else if (category === "Formalwear") {
 
-} else if (category === "Accessories") {
+    filteredProducts = filteredProducts.filter(
+      (product) => product.category.includes("Formal")
+    );
 
-  filteredProducts = filteredProducts.filter(
-    (product) => product.category === "Accessories"
-  );
+  } else if (category === "Accessories") {
 
-}
+    filteredProducts = filteredProducts.filter(
+      (product) => product.category === "Accessories"
+    );
 
-// Gender filter
-if (gender !== "All") {
-  filteredProducts = filteredProducts.filter(
-    (product) => product.gender === gender
-  );
-}
+  }
 
-// Price filter
-if (maxPrice < 50000) {
-  filteredProducts = filteredProducts.filter(
-    (product) => product.price <= maxPrice
-  );
-}
+  // Gender filter
+  if (gender !== "All") {
+    filteredProducts = filteredProducts.filter(
+      (product) => product.gender === gender
+    );
+  }
 
-// Size filter
-if (size !== "All") {
-  filteredProducts = filteredProducts.filter(
-    (product) => product.sizes.includes(size)
-  );
-}
+  // Price filter
+  if (maxPrice < 50000) {
+    filteredProducts = filteredProducts.filter(
+      (product) => product.price <= maxPrice
+    );
+  }
 
-// Search filter
-if (search.trim() !== "") {
-  filteredProducts = filteredProducts.filter((product) =>
-    product.name.toLowerCase().includes(search.toLowerCase())
-  );
-}
+  // Size filter
+  if (size !== "All") {
+    filteredProducts = filteredProducts.filter(
+      (product) => product.sizes.includes(size)
+    );
+  }
 
-if (sort === "LowToHigh") {
+  // Search filter
+  if (search.trim() !== "") {
+    filteredProducts = filteredProducts.filter((product) =>
+      product.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }
 
-  filteredProducts.sort((a, b) => a.price - b.price);
+  // Sorting
+  if (sort === "LowToHigh") {
 
-}
+    filteredProducts.sort((a, b) => a.price - b.price);
 
-else if (sort === "HighToLow") {
+  } else if (sort === "HighToLow") {
 
-  filteredProducts.sort((a, b) => b.price - a.price);
+    filteredProducts.sort((a, b) => b.price - a.price);
 
-}
+  } else if (sort === "Newest") {
 
-else if (sort === "Newest") {
+    filteredProducts.sort((a, b) => {
 
-  filteredProducts.sort((a, b) => {
+      if (a.status === "New" && b.status !== "New") return -1;
+      if (a.status !== "New" && b.status === "New") return 1;
 
-    if (a.status === "New" && b.status !== "New") return -1;
-    if (a.status !== "New" && b.status === "New") return 1;
+      return 0;
 
-    return 0;
+    });
 
-  });
+  }
 
-}
-
+  if (loading) {
+    return (
+      <main className="collections-page">
+        <h2 style={{ textAlign: "center", marginTop: "100px" }}>
+          Loading products...
+        </h2>
+      </main>
+    );
+  }
 
   return (
     <>
@@ -153,9 +180,9 @@ else if (sort === "Newest") {
           {/* Sort */}
           <div className="sort-box">
             <select
-             value={sort}
-             onChange={(e) => setSort(e.target.value)}
-             >
+              value={sort}
+              onChange={(e) => setSort(e.target.value)}
+            >
               <option value="Featured">Sort: Featured</option>
               <option value="LowToHigh">Price: Low to High</option>
               <option value="HighToLow">Price: High to Low</option>
@@ -175,7 +202,7 @@ else if (sort === "Newest") {
 
           {/* Left Sidebar */}
           <div className="sidebar-column">
-            <CollectionSidebar 
+            <CollectionSidebar
               category={category}
               setCategory={setCategory}
 
@@ -189,22 +216,17 @@ else if (sort === "Newest") {
               setMaxPrice={setMaxPrice}
             />
           </div>
-          
 
           {/* Right Products */}
-          
-              <CollectionGrid 
-                   products={filteredProducts}
-              />
-        
-          
+          <CollectionGrid
+            products={filteredProducts}
+          />
 
         </div>
 
       </main>
 
-     
-
+      <Footer />
     </>
   );
 }

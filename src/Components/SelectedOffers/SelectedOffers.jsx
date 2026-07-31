@@ -1,14 +1,18 @@
 // Styles
 import "./SelectedOffers.css";
 
+// React
+import { useEffect, useState } from "react";
+
 // React Router
 import { Link } from "react-router-dom";
 
 // Cart Context
 import { useCart } from "../../context/CartContext";
 
-// Product Data
-import products from "../../data/products";
+// Firestore Service
+import { getProducts } from "../../services/productService";
+import productImages from "../../assets/productImages";
 
 // Icons
 import { FaStar } from "react-icons/fa";
@@ -19,10 +23,42 @@ function SelectedOffers() {
 
     const { addToCart } = useCart();
 
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+
+        async function loadProducts() {
+
+            try {
+
+                const data = await getProducts();
+                setProducts(data);
+
+            } catch (error) {
+
+                console.error("Error loading products:", error);
+
+            } finally {
+
+                setLoading(false);
+
+            }
+
+        }
+
+        loadProducts();
+
+    }, []);
+
     // Sale products
     const saleProducts = products.filter(
         (product) => product.status === "Sale"
     );
+
+    if (loading) {
+        return <p>Loading Selected Offers...</p>;
+    }
 
     return (
 
@@ -64,7 +100,7 @@ function SelectedOffers() {
                 {saleProducts.map((product) => (
 
                     <Link
-                        key={product.id}
+                        key={product.docId}
                         to={`/collections/${product.id}`}
                         className="offer-card"
                     >
@@ -92,9 +128,13 @@ function SelectedOffers() {
                             </button>
 
                             <img
-                                src={product.image}
-                                alt={product.name}
-                            />
+                                src={
+                                     productImages[
+                                         product.image.replace("/src/assets/", "")
+                                         ]
+                                    }
+                                  alt={product.name}
+                                 />
 
                             <button
                                 className="offer-cart-btn"
@@ -133,7 +173,7 @@ function SelectedOffers() {
 
                             <div className="offer-rating">
 
-                                {[1,2,3,4,5].map((star) => (
+                                {[1, 2, 3, 4, 5].map((star) => (
 
                                     <FaStar
                                         key={star}
@@ -151,7 +191,7 @@ function SelectedOffers() {
 
                                 <span className="current-price">
 
-                                    Rs. {product.price.toLocaleString()}
+                                    Rs. {Number(product.price ?? 0).toLocaleString()}
 
                                 </span>
 
@@ -159,7 +199,7 @@ function SelectedOffers() {
 
                                     <span className="old-price">
 
-                                        Rs. {product.oldPrice.toLocaleString()}
+                                        Rs. {Number(product.oldPrice).toLocaleString()}
 
                                     </span>
 

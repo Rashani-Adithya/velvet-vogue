@@ -1,7 +1,38 @@
+import { useEffect, useState } from "react";
 import "./RelatedProducts.css";
-import products from "../../../data/products";
+
+import { getProducts } from "../../../services/productService";
 import CollectionCard from "../../CollectionCard/CollectionCard";
+
 function RelatedProducts({ currentProduct }) {
+
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+
+        async function loadProducts() {
+
+            try {
+
+                const data = await getProducts();
+                setProducts(data);
+
+            } catch (error) {
+
+                console.error("Error loading related products:", error);
+
+            } finally {
+
+                setLoading(false);
+
+            }
+
+        }
+
+        loadProducts();
+
+    }, []);
 
     const relatedProducts = products
         .filter(
@@ -11,7 +42,12 @@ function RelatedProducts({ currentProduct }) {
         )
         .slice(0, 4);
 
+    if (loading) {
+        return <p>Loading related products...</p>;
+    }
+
     return (
+
         <section className="related-products">
 
             <h2 className="related-title">
@@ -23,7 +59,7 @@ function RelatedProducts({ currentProduct }) {
                 {relatedProducts.map((product) => (
 
                     <CollectionCard
-                        key={product.id}
+                        key={product.docId}
                         product={product}
                     />
 
@@ -32,6 +68,7 @@ function RelatedProducts({ currentProduct }) {
             </div>
 
         </section>
+
     );
 
 }

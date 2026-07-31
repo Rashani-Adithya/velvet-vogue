@@ -1,6 +1,9 @@
 // Import CSS
 import "./NewArrivals.css";
 
+// React
+import { useEffect, useState } from "react";
+
 // React Router
 import { Link } from "react-router-dom";
 
@@ -11,15 +14,49 @@ import { useCart } from "../../context/CartContext";
 import { FiHeart } from "react-icons/fi";
 import { HiArrowLongRight } from "react-icons/hi2";
 
-// Product Data
-import products from "../../data/products";
+// Firestore Service
+import { getProducts } from "../../services/productService";
+import productImages from "../../assets/productImages";
 
 function NewArrivals() {
 
     const { addToCart } = useCart();
 
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+
+        async function loadProducts() {
+
+            try {
+
+                const data = await getProducts();
+
+                setProducts(data);
+
+            } catch (error) {
+
+                console.error("Error loading products:", error);
+
+            } finally {
+
+                setLoading(false);
+
+            }
+
+        }
+
+        loadProducts();
+
+    }, []);
+
     // Display first 5 products
     const newArrivals = products.slice(0, 5);
+
+    if (loading) {
+        return <p>Loading New Arrivals...</p>;
+    }
 
     return (
 
@@ -63,7 +100,7 @@ function NewArrivals() {
                     <Link
                         to={`/collections/${product.id}`}
                         className="product-card"
-                        key={product.id}
+                        key={product.docId}
                     >
 
                         {/* Product Image */}
@@ -87,9 +124,13 @@ function NewArrivals() {
                             </button>
 
                             <img
-                                src={product.image}
-                                alt={product.name}
-                            />
+                                 src={
+                                        productImages[
+                                         product.image.replace("/src/assets/", "")
+                                     ]
+                                     }
+                                 alt={product.name}
+                             />
 
                             <button
                                 className="quick-add"
@@ -140,7 +181,7 @@ function NewArrivals() {
 
                             <p className="arrival-price">
 
-                                Rs. {product.price.toLocaleString()}
+                                Rs. {Number(product.price ?? 0).toLocaleString()}
 
                             </p>
 

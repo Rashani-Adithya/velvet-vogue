@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./Checkout.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
@@ -8,28 +9,159 @@ import {
     FiLock,
 } from "react-icons/fi";
 
+import {
+    createOrder,
+    addOrderItem
+} from "../../services/orderService";
+
 function Checkout() {
 
     const {
         cartItems,
         totalItems,
         totalPrice,
+        clearCart,
     } = useCart();
 
     const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+    email: "",
+    firstName: "",
+    lastName: "",
+    address: "",
+    apartment: "",
+    city: "",
+    postalCode: "",
+    country: "Sri Lanka",
+    phone: "",
+    paymentMethod: "Credit / Debit Card"
+});
 
-    const handlePayment = () => {
+    const handlePayment = async () => {
 
-          // Generate a simple order number
-          const orderNumber = `VV-${Date.now().toString().slice(-6)}`;
+    if (cartItems.length === 0) {
 
-         // Save it for the Order Success page
-          sessionStorage.setItem("orderNumber", orderNumber);
+        alert("Your cart is empty.");
+        return;
 
-        // Go to Order Success page
+    }
+
+    if (
+        !formData.email ||
+        !formData.firstName ||
+        !formData.lastName ||
+        !formData.address ||
+        !formData.city ||
+        !formData.postalCode ||
+        !formData.phone
+    ) {
+
+        alert("Please complete all required fields.");
+        return;
+
+    }
+
+    try {
+
+        // Generate Order Number
+        const orderNumber = `VV-${Date.now().toString().slice(-6)}`;
+
+        // Save Order
+        const orderId = await createOrder({
+
+            orderNumber,
+
+            customerName:
+                `${formData.firstName} ${formData.lastName}`,
+
+            email: formData.email,
+
+            firstName: formData.firstName,
+
+            lastName: formData.lastName,
+
+            address: formData.address,
+
+            apartment: formData.apartment,
+
+            city: formData.city,
+
+            postalCode: formData.postalCode,
+
+            country: formData.country,
+
+            phone: formData.phone,
+
+            paymentMethod: formData.paymentMethod,
+
+            totalItems,
+
+            totalAmount: totalPrice,
+
+            status: "Pending"
+
+        });
+
+        // Save Order Items
+        for (const item of cartItems) {
+
+            await addOrderItem({
+
+                orderId,
+
+                productId: item.id,
+
+                productName: item.name,
+
+                image: item.image,
+
+                category: item.category,
+
+                gender: item.gender,
+
+                size: item.size,
+
+                colour: item.colour,
+
+                quantity: item.quantity,
+
+                unitPrice: item.price,
+
+                totalPrice: item.price * item.quantity
+
+            });
+
+        }
+
+        sessionStorage.setItem(
+            "orderNumber",
+            orderNumber
+        );
+
+        clearCart();
+
         navigate("/order-success");
 
-     };
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Failed to place order.");
+
+    }
+
+};
+
+     const handleChange = (e) => {
+
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+        ...prev,
+        [name]: value
+    }));
+
+};
 
     return (
 
@@ -66,6 +198,9 @@ function Checkout() {
 
                         <input
                             type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={handleChange}
                             placeholder="Email address *"
                         />
 
@@ -79,76 +214,102 @@ function Checkout() {
 
                     </div>
 
+                   
                     {/* Shipping */}
 
-                    <div className="checkout-section">
+<div className="checkout-section">
 
-                        <h3>2. Shipping Address</h3>
+    <h3>2. Shipping Address</h3>
 
-                        <div className="two-column">
+    <div className="two-column">
 
-                            <input
-                                type="text"
-                                placeholder="First name *"
-                            />
+        <input
+            type="text"
+            name="firstName"
+            value={formData.firstName}
+            onChange={handleChange}
+            placeholder="First name *"
+        />
 
-                            <input
-                                type="text"
-                                placeholder="Last name *"
-                            />
+        <input
+            type="text"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            placeholder="Last name *"
+        />
 
-                        </div>
+    </div>
 
-                        <input
-                            type="text"
-                            placeholder="Address *"
-                        />
+    <input
+        type="text"
+        name="address"
+        value={formData.address}
+        onChange={handleChange}
+        placeholder="Address *"
+    />
 
-                        <input
-                            type="text"
-                            placeholder="Apartment, suite, etc. (optional)"
-                        />
+    <input
+        type="text"
+        name="apartment"
+        value={formData.apartment}
+        onChange={handleChange}
+        placeholder="Apartment, suite, etc. (optional)"
+    />
 
-                        <div className="two-column">
+    <div className="two-column">
 
-                            <input
-                                type="text"
-                                placeholder="City *"
-                            />
+        <input
+            type="text"
+            name="city"
+            value={formData.city}
+            onChange={handleChange}
+            placeholder="City *"
+        />
 
-                            <input
-                                type="text"
-                                placeholder="Postal Code *"
-                            />
+        <input
+            type="text"
+            name="postalCode"
+            value={formData.postalCode}
+            onChange={handleChange}
+            placeholder="Postal Code *"
+        />
 
-                        </div>
+    </div>
 
-                        <div className="two-column">
+    <div className="two-column">
 
-                            <select>
+        <select
+            name="country"
+            value={formData.country}
+            onChange={handleChange}
+        >
 
-                                <option>
-                                    Sri Lanka
-                                </option>
+            <option>
+                Sri Lanka
+            </option>
 
-                            </select>
+        </select>
 
-                            <input
-                                type="text"
-                                placeholder="Phone Number *"
-                            />
+        <input
+            type="text"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder="Phone Number *"
+        />
 
-                        </div>
+    </div>
 
-                        <label className="checkbox">
+    <label className="checkbox">
 
-                            <input type="checkbox" />
+        <input type="checkbox" />
 
-                            Save this information for next time
+        Save this information for next time
 
-                        </label>
+    </label>
 
-                    </div>
+</div>
 
                     {/* Shipping Method */}
 
@@ -177,45 +338,49 @@ function Checkout() {
                         </div>
 
                     </div>
+                      {/* Payment */}
 
-                    {/* Payment */}
+<div className="checkout-section">
 
-                    <div className="checkout-section">
+    <h3>4. Payment Method</h3>
 
-                        <h3>4. Payment Method</h3>
+    <div className="payment-option">
 
-                        <div className="payment-option">
+        <label>
 
-                            <label>
+            <input
+                type="radio"
+                name="paymentMethod"
+                value="Credit / Debit Card"
+                checked={formData.paymentMethod === "Credit / Debit Card"}
+                onChange={handleChange}
+            />
 
-                                <input
-                                    type="radio"
-                                    name="payment"
-                                    defaultChecked
-                                />
+            Credit / Debit Card
 
-                                Credit / Debit Card
+        </label>
 
-                            </label>
+    </div>
 
-                        </div>
+    <div className="payment-option">
 
-                        <div className="payment-option">
+        <label>
 
-                            <label>
+            <input
+                type="radio"
+                name="paymentMethod"
+                value="Cash on Delivery"
+                checked={formData.paymentMethod === "Cash on Delivery"}
+                onChange={handleChange}
+            />
 
-                                <input
-                                    type="radio"
-                                    name="payment"
-                                />
+            Cash on Delivery
 
-                                Cash on Delivery
+        </label>
 
-                            </label>
+    </div>
 
-                        </div>
-
-                    </div>
+</div>
 
                     <div className="checkout-footer">
 

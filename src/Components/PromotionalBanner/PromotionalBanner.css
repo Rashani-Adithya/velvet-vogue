@@ -21,6 +21,7 @@
     height:100%;
     object-fit:cover;
     display:block;
+    object-position:center 30%;
     transition:transform .6s ease;
 }
 

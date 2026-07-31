@@ -1,0 +1,124 @@
+.saved-card{
+
+    background:#fff;
+
+    border:1px solid #e8e8e8;
+
+    border-radius:10px;
+
+    padding:35px;
+
+}
+
+.saved-title{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-bottom:20px;
+
+}
+
+.saved-title svg{
+
+    color:#8B1E3F;
+
+    font-size:24px;
+
+}
+
+.saved-title h2{
+
+    font-size:18px;
+
+    font-family:Georgia, serif;
+
+}
+
+.saved-text{
+
+    color:#666;
+
+    line-height:1.8;
+
+    margin-bottom:30px;
+
+}
+
+.empty-saved{
+
+    background:#fff3f7;
+
+    border-radius:15px;
+
+    height:220px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.empty-saved svg{
+
+    font-size:50px;
+
+    color:#8B1E3F;
+
+}
+
+.empty-saved p{
+
+    color:#777;
+
+    font-size:14px;
+
+}
+
+
+.saved-product{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    margin-top:20px;
+    padding:12px 0;
+    border-bottom:1px solid #eee;
+}
+
+.saved-image{
+    width:70px;
+    height:90px;
+    object-fit:cover;
+    border-radius:6px;
+}
+
+.saved-info{
+    flex:1;
+}
+
+.saved-info h4{
+    margin-bottom:6px;
+    font-size:16px;
+}
+
+.saved-info p{
+    color:#8b1538;
+    font-weight:600;
+}
+
+.remove-btn{
+    background:none;
+    border:none;
+    cursor:pointer;
+    font-size:18px;
+    color:#8b1538;
+}

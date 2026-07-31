@@ -34,7 +34,7 @@
 }
 
 .collection-badge.new{
-    background:#111;
+    background:#8B1E3F;
 }
 
 .collection-badge.sale{
@@ -60,7 +60,7 @@
 }
 
 .wishlist-btn:hover{
-    color:#b71c4a;
+    color:#8B1E3F;
 }
 
 .add-cart-btn{
@@ -70,7 +70,7 @@
     bottom:-60px;
     padding:14px;
     border:none;
-    background:#111;
+    background:#8B1E3F;
     color:#fff;
     cursor:pointer;
     transition:.35s;

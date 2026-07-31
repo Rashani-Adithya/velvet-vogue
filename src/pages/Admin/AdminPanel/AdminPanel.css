@@ -1,0 +1,98 @@
+.admin-panel{
+
+    width:95%;
+    max-width:1800px;
+    margin:70px auto 100px;
+
+}
+
+.admin-header{
+
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:60px;
+
+}
+
+.admin-subtitle{
+
+    color:#8B1E3F;
+    letter-spacing:4px;
+    font-size:14px;
+
+}
+
+.admin-header h1{
+
+    margin-top:15px;
+    font-size:32px;
+    font-family:Georgia,serif;
+    color:#171717;
+
+}
+
+.admin-user{
+
+    background:#111;
+    color:white;
+
+    border:none;
+
+    padding:15px 40px;
+
+    letter-spacing:3px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+}
+
+.admin-tabs{
+
+    display:flex;
+
+    gap:70px;
+
+    border-bottom:1px solid #e8e2da;
+
+    margin-bottom:60px;
+
+}
+
+.admin-tabs button{
+
+    background:none;
+
+    border:none;
+
+    cursor:pointer;
+
+    padding-bottom:20px;
+
+    font-size:14px;
+
+    letter-spacing:2px;
+
+    text-transform:uppercase;
+
+    color:#999;
+
+}
+
+.admin-tabs button.active{
+
+    color:#111;
+
+    border-bottom:3px solid #8B1E3F;
+
+    font-weight:600;
+
+}
+
+.admin-content{
+
+    min-height:700px;
+
+}
