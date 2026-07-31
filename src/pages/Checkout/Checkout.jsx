@@ -1,4 +1,5 @@
 import { useState } from "react";
+import productImages from "../../assets/productImages";
 import "./Checkout.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
@@ -422,8 +423,11 @@ function Checkout() {
                         >
 
                             <img
-                                src={item.image}
-                                alt={item.name}
+                                 src={
+                                    productImages[
+                                        item.image.replace("/src/assets/", "")
+                                    ]
+                                 }
                             />
 
                             <div className="summary-details">

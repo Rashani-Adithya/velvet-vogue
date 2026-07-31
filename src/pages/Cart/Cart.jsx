@@ -1,3 +1,4 @@
+import productImages from "../../assets/productImages";
 import "./Cart.css";
 import { Link } from "react-router-dom";
 import { useCart } from "../../context/CartContext";
@@ -61,11 +62,16 @@ function Cart() {
 
                                 <div className="product-info">
 
-                                    <img
-                                        src={item.image}
-                                        alt={item.name}
+                                    
+                                  <img
+                                      src={
+                                         productImages[
+                                            item.image.replace("/src/assets/", "")
+                                                ]
+                                          }
+                                          alt={item.name}
                                     />
-
+                                    
                                     <div>
                                         <h3>{item.name}</h3>
 
